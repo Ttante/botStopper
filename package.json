@@ -4,11 +4,27 @@
   "description": "botStoppin",
   "main": "app.js",
   "dependencies": {
-    "express": "^4.15.4"
+    "body-parser": "^1.18.1",
+    "budo": "^10.0.4",
+    "choo": "^6.0.1",
+    "cookie-parser": "^1.4.3",
+    "ecstatic": "^3.0.0",
+    "express": "^4.15.4",
+    "morgan": "^1.8.2",
+    "serve-favicon": "^2.4.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babelify": "^7.3.0",
+    "browserify": "^14.4.0",
+    "npm-sass": "^2.2.1",
+    "uglifyify": "^4.0.3"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "sass": "onchange 'browser/assets/css/*.scss' -- npm run sass-build",
+    "sass-build": "npm-sass browser/assets/css/*.scss > public/css/index.css",
+    "start": "node ./server/app.js && make browser",
+    "start-dev": "ENV=dev nodemon ./server/app.js & make browser-dev",
+    "test": "mocha server/test/** --recursive"
   },
   "repository": {
     "type": "git",
