@@ -5,12 +5,16 @@ const choo = require('choo')
 
 const app = choo()
 
-Promise.resolve(app)
-  .then(require('./lib/router'))
-  .then(require('./lib/models'))
-  .then(() => {
-    console.log('Creators has started!')
+app.use(function (state, emitter) {
+  emitter.on('login', () => {
+    state.user = {
+      isLoggedIn: true
+    }
+
+    emitter.emit('render')
   })
-  .catch((err) => {
-    console.log(err.stack || err)
-  })
+})
+
+require('./lib/router')(app)
+
+document.body.appendChild(app.start())
